@@ -13,12 +13,12 @@ void YJHScore::YJHScoreBoard(int body, int max_body, int growth, int poison, int
     wattron(yjh_scorewin, COLOR_PAIR(3)); // 색상 적용
     wborder(yjh_scorewin, '|','|','-','-','*','*','*','*'); // 테두리 설정
     wbkgd(yjh_scorewin, COLOR_PAIR(3)); // 배경 색상 설정
-    mvwprintw(yjh_scorewin, 2, 3, " SCORE BOARD");
+    mvwprintw(yjh_scorewin, 2, 3, " 스코어 보드");
     mvwprintw(yjh_scorewin, 3, 3, " B : %d / %d ", body, max_body);
     mvwprintw(yjh_scorewin, 4, 3, " + : %d", growth );
     mvwprintw(yjh_scorewin, 5, 3, " - : %d", poison );
     mvwprintw(yjh_scorewin, 6, 3, " O : %d ", gate);
-    mvwprintw(yjh_scorewin, 7, 3, " BB : %d ", big_growth); // Big Growth 아이템 표시
+    mvwprintw(yjh_scorewin, 7, 3, " BB : %d ", big_growth); // Big Growth 아이템 표시 - 한 번 먹으면 5개 늘어나는 거임
     mvwprintw(yjh_scorewin, 8, 3, " Time : %d s", elapsed_time);
     wrefresh(yjh_scorewin); // 창 갱신
 }
@@ -30,7 +30,7 @@ bool YJHScore::YJHMissionBoard(int max_body, int growth, int poison, int gate) {
     wattron(yjh_missionwin, COLOR_PAIR(3)); // 색상 적용
     wborder(yjh_missionwin, '|','|','-','-','*','*','*','*'); // 테두리 설정
     wbkgd(yjh_missionwin, COLOR_PAIR(3)); // 배경 색상 설정
-    mvwprintw(yjh_missionwin, 2, 3, " MISSION");
+    mvwprintw(yjh_missionwin, 2, 3, " 미션");
 
     if(max_body >= yjh_mbl)
         mvwprintw(yjh_missionwin, 3, 3, " B : %d  (Clear!)", yjh_mbl );

@@ -124,28 +124,28 @@ void YJHMap::DisplayHomeScreen() {
     keypad(yjh_homewin, TRUE); // 특수키 입력 가능
     nodelay(yjh_homewin, TRUE); // 입력을 안 받아도 넘어가게 설정
 
-    char yjh_home_art[33][139] =
+    char yjh_home_art[35][140] =
     {
         "                                                                                                                                         ",
-        "                                                  Final Project - Snakegame                                                               ",
+        "                                                       Project - Snackgame                                                               ",
         "                                                                                                                                          ",
-        "                                                  Press 'Enter' : Start the Game                                                          ",
-        "                                                  Press 'Q' to End the Game                                                               ",
-        "                                                  1. Start : Map - 1                                                                      ",
-        "                                                  2. Start : Map - 2                                                                      ",
-        "                                                  3. Start : Map - 3                                                                      ",
-        "                                                  4. Start : Map - 4                                                                      ",
-        "                                                                                                                                          ",
-        "                                                                                                                                          ",
+        "                                                  Press 'Enter' : Start Game                                                              ",
+        "                                                  Press 'Q' :End Game                                                                     ",
+        "                                                  Press 1 : Map - 1                                                                       ",
+        "                                                  Press 2 : Map - 2                                                                       ",
+        "                                                  Press 3 : Map - 3                                                                       ",
+        "                                                  Press 4 : Map - 4                                                                       ",
         "                                                                                                                                          ",
         "                                                                                                                                          ",
         "                                                                                                                                          ",
         "                                                                                                                                          ",
-        "                                                                                                                                          ",
-        "                                                                                                                                          ",
-        "                                                                                                                                          ",
-        "                                                                                                                                          ",
-        "                                                                                                                                          ",
+        "            YY      YY     JJJJJJJJJJJJJJJJ     HH          HH                                                                            ",
+        "             YY    YY             JJ            HH          HH                                                                            ",
+        "              YY  YY              JJ            HH          HH                                                                            ",
+        "                YY                JJ            HHHHHHHHHHHHHH                                                                            ",
+        "                YY            JJ  JJ            HH          HH                                                                            ",
+        "                YY            JJ  JJ            HH          HH                                                                            ",
+        "                YY              JJ              HH          HH                                                                            ",
         "                                                                                                                                          ",
         "                                                                                                                                          ",
         "                                                                                                                                          ",
@@ -160,8 +160,8 @@ void YJHMap::DisplayHomeScreen() {
         "                                                                                                                                          ",
         "                                                                                                                                          "
     };
-    for(int i = 0; i < 33; i++) {
-        for(int j = 0; j < 139; j++) {
+    for(int i = 0; i < 35; i++) {
+        for(int j = 0; j < 140; j++) {
             mvwaddch(yjh_homewin, i + 3, j + 3, yjh_home_art[i][j]);
         }
     }

@@ -22,16 +22,16 @@ bool YJHSnake::Game(WINDOW* window, YJHScore& score, int map_number) {
         int input = wgetch(window);
         switch (input) {
         case KEY_UP:
-            if (yjh_dir != 2) yjh_dir = 0;
+            if (yjh_dir != 2) yjh_dir = 0; // 위로
             break;
         case KEY_DOWN:
-            if (yjh_dir != 0) yjh_dir = 2;
+            if (yjh_dir != 0) yjh_dir = 2; // 아래로
             break;
         case KEY_LEFT:
-            if (yjh_dir != 1) yjh_dir = 3;
+            if (yjh_dir != 1) yjh_dir = 3; // 왼쪽
             break;
         case KEY_RIGHT:
-            if (yjh_dir != 3) yjh_dir = 1;
+            if (yjh_dir != 3) yjh_dir = 1; // 오른쪽
             break;
         case 'q':
             return false;
@@ -76,7 +76,7 @@ bool YJHSnake::Game(WINDOW* window, YJHScore& score, int map_number) {
             return true;
         }
 
-        usleep(200000); // 속도 조절
+        usleep(200000); // 속도 조절 -이거 그냥 tick부분?
     }
 }
 
@@ -118,7 +118,7 @@ bool YJHSnake::CheckCollision(int& growth, int& poison, int map_number, int& gat
         if (yjh_body[i].first == y && yjh_body[i].second == x) return true;
     }
 
-    // 성장 아이템과 충돌 확인
+    // 성장 아이템과 충돌 확인 - 아이템 획득
     if (yjh_map[map_number][y][x] == '5') {
         growth++;
         yjh_body.push_back({ yjh_body.back().first, yjh_body.back().second });
@@ -131,7 +131,7 @@ bool YJHSnake::CheckCollision(int& growth, int& poison, int map_number, int& gat
         yjh_body.pop_back();
     }
 
-    // 큰 성장 아이템과 충돌 확인
+    // 큰 성장 아이템과 충돌 확인 - 1방에 5개 늘어남
     if (yjh_map[map_number][y][x] == '8') {
         big_growth++; // 큰 성장 아이템 수 증가
         growth++; // 성장 아이템 수 증가
@@ -252,7 +252,7 @@ char YJHSnake::GetMapChar(int map_number, int y, int x) {
         case '5': return 'G';  // 성장 아이템
         case '6': return 'P';  // 독 아이템
         case '7': return 'O';  // 게이트
-        case '8': return 'B';  // 큰 성장 아이템
+        case '8': return 'B';  // 큰 성장 아이템 - 1방에 5개
         default: return ' ';
     }
 }
@@ -265,7 +265,7 @@ void YJHSnake::Display(WINDOW* window, int map_number) {
             mvwaddch(window, i, j, ch);
         }
     }
-    // 머리 부분을 'H'로 표시하고, 몸통 부분을 '3'으로 표시
+    // 머리 부분을 'H'로 표시하고, 몸통 부분을 '3'으로 표시 - 이거 그냥 이렇게 만듬..
     mvwaddch(window, yjh_body[0].first, yjh_body[0].second, 'H');
     for (int i = 1; i < yjh_body.size(); i++) {
         mvwaddch(window, yjh_body[i].first, yjh_body[i].second, '3');

@@ -13,7 +13,7 @@ public:
     int yjh_x, yjh_y; // 시작 위치
     int yjh_minlen = 3; // 최소 길이
     int yjh_maxlen = 12; // 최대 길이
-    int yjh_dir; // 방향
+    int yjh_dir; // 방향 - 어디로 갈지
     std::vector<std::pair<int, int>> yjh_body; // 몸통 위치
     int yjh_itempos[3][4] = {0}; // 아이템 위치 배열 크기 수정
     int yjh_itemnum = 0;
