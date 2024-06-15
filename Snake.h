@@ -10,16 +10,16 @@
 
 class Snake {
 public:
-    int set_x, set_y;
-    int min_len = 3;
-    int max_len = 12;
-    int direction;
-    std::vector<std::pair<int, int>> body;
-    int item_pos[3][4] = {0}; // 아이템 포지션 배열 크기 수정
+    int set_x, set_y; // 시작 위치
+    int min_len = 3; // 최소 길이
+    int max_len = 12; // 최대 길이
+    int direction; // 방향
+    std::vector<std::pair<int, int>> body; // 몸통 위치
+    int item_pos[3][4] = {0}; // 아이템 위치 배열 크기 수정
     int item_n = 0;
     int itemType = 0;
     char item_shape[3] = {'5', '6', '8'}; // 새로운 아이템 타입 추가
-    int h, w;
+    int h, w; // 높이, 너비
     int gate[2][2]; // 게이트 위치 저장
     time_t gate_time; // 게이트 생성 시간 기록
     time_t last_item_time[3]; // 아이템별 마지막 생성 시간
@@ -87,7 +87,7 @@ public:
             "910000100000000000000000000000000000000019",
             "910000000000000000000000000000000000000019",
             "910000000000000000000000000000000000000019",
-            "910000000000000000000000000000000000000019",
+            "000000000000000000000000000000000000000019",
             "910000000000000000000000000000000000000019",
             "910000000000000000000000000000000000000019",
             "910000000000000000000000000000000000000019",
@@ -118,6 +118,7 @@ public:
             "999999999999999999999999999999999999999999"
         }
     };
+
     Snake(int x, int y, int height, int width);
     bool Game(WINDOW* s1, Score& b, int map_number);
     void Move(int direction);
@@ -128,7 +129,8 @@ public:
     void DelGate(int map_number);
     void Show(WINDOW* s1, int map_num);
     char MapChar(int map_num, int y, int x);
-    bool UnableItem(int map_number, int p1, int p2); // 아이템이 생성 가능한 지 확인.
+    bool UnableItem(int map_number, int p1, int p2); // 아이템이 생성 가능한지 확인
 };
 
 #endif // SNAKE_H
+

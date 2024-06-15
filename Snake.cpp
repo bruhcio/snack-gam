@@ -7,9 +7,9 @@ Snake::Snake(int x, int y, int height, int width)
         body.push_back({ x, y - i });
     }
     for (int i = 0; i < 3; i++) {
-        last_item_time[i] = 0; // Initialize last item generation times
+        last_item_time[i] = 0; // 아이템 마지막 생성 시간 초기화
     }
-    gate_time = 0; // Initialize gate time
+    gate_time = 0; // 게이트 시간 초기화
 }
 
 bool Snake::Game(WINDOW* s1, Score& b, int map_number) {
@@ -40,28 +40,28 @@ bool Snake::Game(WINDOW* s1, Score& b, int map_number) {
 
         Move(direction);
         if (Collision(growth, poison, map_number)) return false;
-        if (body.size() > max_len) max_len = body.size(); // Update max length
+        if (body.size() > max_len) max_len = body.size(); // 최대 길이 업데이트
 
         time_t current_time = time(NULL);
-        
-        // Check if it's time to generate new items
+
+        // 새로운 아이템을 생성할 시간인지 확인
         for (int i = 0; i < 3; i++) {
             if (difftime(current_time, last_item_time[i]) >= item_spawn_interval[i]) {
                 SpawnItem(map_number, i);
-                last_item_time[i] = current_time; // Reset item generation timer
+                last_item_time[i] = current_time; // 아이템 생성 시간 초기화
             }
         }
 
-        DelItem(map_number); // Check and delete expired items
+        DelItem(map_number); // 만료된 아이템 삭제
 
-        // Check if it's time to generate gates
+        // 게이트를 생성할 시간인지 확인
         if (!gates_generated && (difftime(current_time, start_time) >= 30.0 || body.size() > 10)) {
             GenerateGate(map_number);
-            gate_time = current_time; // Record gate generation time
+            gate_time = current_time; // 게이트 생성 시간 기록
             gates_generated = true;
         }
 
-        // Check if it's time to delete gates
+        // 게이트를 삭제할 시간인지 확인
         if (gates_generated && difftime(current_time, gate_time) >= 5.0) {
             DelGate(map_number);
             gates_generated = false;
@@ -75,7 +75,7 @@ bool Snake::Game(WINDOW* s1, Score& b, int map_number) {
             return true;
         }
 
-        usleep(200000); // control speed
+        usleep(200000); // 속도 조절
     }
 }
 
@@ -106,70 +106,70 @@ bool Snake::Collision(int& growth, int& poison, int map_number) {
     int y = body[0].first;
     int x = body[0].second;
 
-    // Check collision with wall
+    // 벽과 충돌 확인
     if (map[map_number][y][x] == '1' || map[map_number][y][x] == '9') return true;
 
-    // Check collision with immune wall
+    // 면역 벽과 충돌 확인
     if (map[map_number][y][x] == '2') return false;
 
-    // Check collision with itself
+    // 자기 자신과 충돌 확인
     for (int i = 1; i < body.size(); i++) {
         if (body[i].first == y && body[i].second == x) return true;
     }
 
-    // Check collision with growth item
+    // 성장 아이템과 충돌 확인
     if (map[map_number][y][x] == '5') {
         growth++;
         body.push_back({ body.back().first, body.back().second });
     }
 
-    // Check collision with poison item
+    // 독 아이템과 충돌 확인
     if (map[map_number][y][x] == '6') {
         poison++;
         if (body.size() <= 3) return true;
         body.pop_back();
     }
 
-    // Check collision with big growth item
+    // 큰 성장 아이템과 충돌 확인
     if (map[map_number][y][x] == '8') {
         for (int i = 0; i < 5; ++i) {
             body.push_back({ body.back().first, body.back().second });
         }
     }
 
-    // Check collision with gate
+    // 게이트와 충돌 확인
     if (map[map_number][y][x] == '7') {
         int gate_idx = (gate[0][0] == y && gate[0][1] == x) ? 1 : 0;
         y = gate[gate_idx][0];
         x = gate[gate_idx][1];
 
-        // Determine new direction based on gate exit position
-        if (x == 0) direction = 1; // left wall, move right
-        else if (x == w - 1) direction = 3; // right wall, move left
-        else if (y == 0) direction = 2; // top wall, move down
-        else if (y == h - 1) direction = 0; // bottom wall, move up
+        // 게이트 출구 위치에 따른 새로운 방향 결정
+        if (x == 0) direction = 1; // 왼쪽 벽, 오른쪽으로 이동
+        else if (x == w - 1) direction = 3; // 오른쪽 벽, 왼쪽으로 이동
+        else if (y == 0) direction = 2; // 위쪽 벽, 아래로 이동
+        else if (y == h - 1) direction = 0; // 아래쪽 벽, 위로 이동
         else {
-            // internal gate, follow the direction
+            // 내부 게이트, 방향을 따라 이동
             switch (direction) {
-            case 0: // up
+            case 0: // 위
                 if (map[map_number][y - 1][x] != '1' && map[map_number][y - 1][x] != '2') y -= 1;
                 else if (map[map_number][y][x + 1] != '1' && map[map_number][y][x + 1] != '2') x += 1;
                 else if (map[map_number][y][x - 1] != '1' && map[map_number][y][x - 1] != '2') x -= 1;
                 else y += 1;
                 break;
-            case 1: // right
+            case 1: // 오른쪽
                 if (map[map_number][y][x + 1] != '1' && map[map_number][y][x + 1] != '2') x += 1;
                 else if (map[map_number][y + 1][x] != '1' && map[map_number][y + 1][x] != '2') y += 1;
                 else if (map[map_number][y - 1][x] != '1' && map[map_number][y - 1][x] != '2') y -= 1;
                 else x -= 1;
                 break;
-            case 2: // down
+            case 2: // 아래
                 if (map[map_number][y + 1][x] != '1' && map[map_number][y + 1][x] != '2') y += 1;
                 else if (map[map_number][y][x + 1] != '1' && map[map_number][y][x + 1] != '2') x += 1;
                 else if (map[map_number][y][x - 1] != '1' && map[map_number][y][x - 1] != '2') x -= 1;
                 else y -= 1;
                 break;
-            case 3: // left
+            case 3: // 왼쪽
                 if (map[map_number][y][x - 1] != '1' && map[map_number][y][x - 1] != '2') x -= 1;
                 else if (map[map_number][y + 1][x] != '1' && map[map_number][y + 1][x] != '2') y += 1;
                 else if (map[map_number][y - 1][x] != '1' && map[map_number][y - 1][x] != '2') y -= 1;
@@ -228,7 +228,7 @@ void Snake::GenerateGate(int map_number) {
             gate_count++;
         }
     }
-    gate_time = time(NULL); // 기록 게이트 생성 시간
+    gate_time = time(NULL); // 게이트 생성 시간 기록
 }
 
 void Snake::DelGate(int map_number) {
@@ -239,14 +239,14 @@ void Snake::DelGate(int map_number) {
 
 char Snake::MapChar(int map_num, int y, int x) {
     switch (map[map_num][y][x]) {
-        case '9': return '*';  // Border
-        case '1': return '#';  // Wall
-        case '2': return '+';  // Immune Wall
-        case '0': return ' ';  // Empty space
-        case '5': return 'G';  // Growth item
-        case '6': return 'P';  // Poison item
-        case '7': return 'O';  // Gate
-        case '8': return 'B';  // Big growth item
+        case '9': return '*';  // 경계
+        case '1': return '#';  // 벽
+        case '2': return '+';  // 면역 벽
+        case '0': return ' ';  // 빈 공간
+        case '5': return 'G';  // 성장 아이템
+        case '6': return 'P';  // 독 아이템
+        case '7': return 'O';  // 게이트
+        case '8': return 'B';  // 큰 성장 아이템
         default: return ' ';
     }
 }

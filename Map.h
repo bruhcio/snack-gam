@@ -6,7 +6,7 @@
 
 class Map {
 public:
-    int sx, sy; // Map window 생성 위치
+    int sx, sy; // Map 창 생성 위치
     int s1_h, s1_w; // Map1의 가로 세로 길이
     int Goal[4][4] = {
         {10, 5, 2, 2}, // 예시: 스테이지 1 클리어 조건

@@ -3,6 +3,6 @@
 
 int main() {
     Map start;
-    start.InitHome();
+    start.InitHome(); // 초기 화면 시작
     return 0;
 }
