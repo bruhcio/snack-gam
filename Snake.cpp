@@ -122,13 +122,15 @@ bool YJHSnake::CheckCollision(int& growth, int& poison, int map_number, int& gat
     if (yjh_map[map_number][y][x] == '5') {
         growth++;
         yjh_body.push_back({ yjh_body.back().first, yjh_body.back().second });
-    }
+        yjh_map[map_number][y][x] = '0'; // 아이템 제거 - 06-17
+    }   
 
     // 독 아이템과 충돌 확인
     if (yjh_map[map_number][y][x] == '6') {
         poison++;
         if (yjh_body.size() <= 3) return true;
         yjh_body.pop_back();
+        yjh_map[map_number][y][x] = '0'; // 아이템 제거 - 06-17
     }
 
     // 큰 성장 아이템과 충돌 확인 - 1방에 5개 늘어남
@@ -138,6 +140,7 @@ bool YJHSnake::CheckCollision(int& growth, int& poison, int map_number, int& gat
         for (int i = 0; i < 5; ++i) {
             yjh_body.push_back({ yjh_body.back().first, yjh_body.back().second });
         }
+        yjh_map[map_number][y][x] = '0'; // 아이템 제거 - 06-17
     }
 
     // 게이트와 충돌 확인
